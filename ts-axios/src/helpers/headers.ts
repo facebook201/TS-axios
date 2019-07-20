@@ -14,7 +14,7 @@ function normalizeHeaderName(headers: any, normalizeName: string): void {
 }
 
 export function processHeaders(headers: any, data: any): any {
-  normalizeHeaderName(headers, 'Content-Type')
+  normalizeHeaderName(headers, 'Content-Type');
 
   if (isPlainObject(data)) {
     if (headers && !headers['Content-Type']) {
