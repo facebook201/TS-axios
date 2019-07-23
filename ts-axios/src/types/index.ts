@@ -1,4 +1,5 @@
 import { config } from "shelljs";
+import { request } from "http";
 
 //  方法的声明 可以使用 字符串字面量类型用来约束取值只能是某几个字符串中的一个
 export type Method =
@@ -23,7 +24,8 @@ export interface AxiosRequestConfig {
   data?: any
   params?: any
   headers?: any,
-  responseType: XMLHttpRequestResponseType
+  responseType?: XMLHttpRequestResponseType,
+  timeout?: number
 }
 
 export interface AxiosResponse {
@@ -38,3 +40,11 @@ export interface AxiosResponse {
 export interface AxiosPromise extends Promise<AxiosResponse> {
 
 }
+
+export interface AxiosError extends Error {
+  isAxiosError: boolean,
+  config: AxiosRequestConfig,
+  code?: string | null,
+  request?: any,
+  response?: AxiosResponse
+};
