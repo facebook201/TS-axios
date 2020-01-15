@@ -7,11 +7,11 @@ import { processHeaders } from './helpers/headers'
 function axios(config: AxiosRequestConfig): AxiosPromise {
   // TODO
   // 处理config
-  processConfig(config);
+  processConfig(config)
 
   return xhr(config).then(res => {
-    return transformResponseData(res);
-  });
+    return transformResponseData(res)
+  })
 }
 
 function processConfig(config: AxiosRequestConfig): void {
@@ -36,9 +36,8 @@ function transformHeaders(config: AxiosRequestConfig): any {
 }
 
 function transformResponseData(res: AxiosResponse) {
-  res.data = transformResponse(res);
-  return res;
+  res.data = transformResponse(res)
+  return res
 }
 
 export default axios
-

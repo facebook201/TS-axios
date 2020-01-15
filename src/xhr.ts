@@ -1,30 +1,30 @@
-import { AxiosRequestConfig, AxiosResponse, AxiosPromise} from './types'
-import { parseHeaders } from './helpers/headers';
+import { AxiosRequestConfig, AxiosResponse, AxiosPromise } from './types'
+import { parseHeaders } from './helpers/headers'
 
 export default function xhr(config: AxiosRequestConfig): AxiosPromise {
   return new Promise((resolve, reject) => {
-    const { data = null, url, method = 'get', headers, responseType, timeout } = config;
+    const { data = null, url, method = 'get', headers, responseType, timeout } = config
 
-    const request = new XMLHttpRequest();
+    const request = new XMLHttpRequest()
 
     if (responseType) {
-      request.responseType = responseType;
+      request.responseType = responseType
     }
     if (timeout) {
-      request.timeout = timeout;
+      request.timeout = timeout
     }
 
-    request.open(method.toUpperCase(), url, true);
+    request.open(method.toUpperCase(), url, true)
 
     request.onreadystatechange = function handleLoad() {
       if (request.readyState !== 4) {
-        return;
+        return
       }
       if (request.status === 0) {
-        return;
+        return
       }
-      const responseHeaders = parseHeaders(request.getAllResponseHeaders());
-      const responseData = responseType !== 'text' ? request.response : request.responseText;
+      const responseHeaders = parseHeaders(request.getAllResponseHeaders())
+      const responseData = responseType !== 'text' ? request.response : request.responseText
 
       const response: AxiosResponse = {
         data: responseData,
@@ -33,37 +33,37 @@ export default function xhr(config: AxiosRequestConfig): AxiosPromise {
         headers: responseHeaders,
         config,
         request
-      };
+      }
       // 处理200成功和不成功的情况
-      handleResponse(response);
-    };
+      handleResponse(response)
+    }
 
     // 错误处理
     request.onerror = function handleError() {
-      reject(new Error('NetWork Error!'));
-    };
+      reject(new Error('NetWork Error!'))
+    }
 
     // 超时
     request.ontimeout = function handleTime() {
-      reject(new Error(`Timeout of ${timeout} ms exceeded`));
-    };
+      reject(new Error(`Timeout of ${timeout} ms exceeded`))
+    }
 
     Object.keys(headers).forEach(name => {
       // 没有data的时候 content-type 是没有意义的
       if (data === null && name.toLowerCase() === 'content-type') {
-        delete headers[name];
+        delete headers[name]
       } else {
-        request.setRequestHeader(name, headers[name]);
+        request.setRequestHeader(name, headers[name])
       }
     })
-    request.send(data);
+    request.send(data)
 
     function handleResponse(response: AxiosResponse): void {
       if (response.status >= 200 && response.status <= 300) {
-        resolve(response);
+        resolve(response)
       } else {
-        reject(`Request failed with status code ${response.status}`);
+        reject(`Request failed with status code ${response.status}`)
       }
     }
-  });
+  })
 }
