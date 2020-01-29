@@ -14,7 +14,7 @@ function normalizeHeaderName(headers: any, normalizeName: string): void {
 }
 
 export function processHeaders(headers: any, data: any): any {
-  normalizeHeaderName(headers, 'Content-Type');
+  normalizeHeaderName(headers, 'Content-Type')
 
   if (isPlainObject(data)) {
     if (headers && !headers['Content-Type']) {
@@ -25,24 +25,24 @@ export function processHeaders(headers: any, data: any): any {
 }
 
 export function parseHeaders(headers: string): any {
-  let parsed = Object.create(null);
+  let parsed = Object.create(null)
   if (!headers) {
-    return parsed;
+    return parsed
   }
 
-  headers.split('\r\n').forEach((line) => {
-    let [key, value] = line.split(':');
+  headers.split('\r\n').forEach(line => {
+    let [key, value] = line.split(':')
 
-    key = key.trim().toLowerCase();
+    key = key.trim().toLowerCase()
     if (!key) {
-      return;
+      return
     }
-    value = value.trim();
+    value = value.trim()
 
     if (!value) {
-      return;
+      return
     }
-    parsed[key] = value;
-  });
-  return parsed;
+    parsed[key] = value
+  })
+  return parsed
 }
