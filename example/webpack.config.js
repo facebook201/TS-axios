@@ -11,7 +11,6 @@ module.exports = {
    * entries 是一个对象 key为目录名
    */
   entry: fs.readdirSync(__dirname).reduce((entries, dir) => {
-    console.log(__dirname);
     const fullDir = path.join(__dirname, dir);
     const entry = path.join(fullDir, 'app.ts');
     if (fs.statSync(fullDir).isDirectory() && fs.existsSync(entry)) {

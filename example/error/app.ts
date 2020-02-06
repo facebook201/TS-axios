@@ -1,4 +1,4 @@
-import axios from '../../src/index';
+import axios, { AxiosError } from '../../src/index';
 
 // 请求404catch到错误
 axios({
@@ -27,6 +27,8 @@ axios({
   timeout: 2000
 }).then(res => {
   console.log(res);
-}).catch(e => {
-  console.log(e);
+}).catch((e: AxiosError) => {
+  console.log(e.message);
+  console.log(e.request);
+  console.log(e.response);
 });
